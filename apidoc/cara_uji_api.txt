@@ -1,0 +1,187 @@
+🚀 Backend Mine Planner & Shipping Planner – ExpressJS + PostgreSQL 18
+
+Backend ini dibuat menggunakan Node.js + ExpressJS, dengan database PostgreSQL 18, dan mendukung multi-role user (Mine Planner & Shipping Planner) menggunakan tabel terpisah.
+
+📌 Cara Menjalankan Backend
+1. Install PostgreSQL 18
+
+Pastikan PostgreSQL sudah ter-install di komputer kamu.
+
+2. Install Postman
+
+Digunakan untuk pengujian API.
+
+3. Install Dependencies
+npm install
+
+4. Jalankan server
+cd backend
+npm run dev:build
+
+
+Server akan berjalan di:
+
+http://localhost:9000
+
+🔎 Cara Uji API di Postman
+
+Base URL Semua Endpoint:
+
+http://localhost:9000/api
+
+1️⃣ Register Mine Planner
+Request
+
+Method: POST
+URL: http://localhost:9000/api/auth/register/mine
+
+Body (JSON):
+
+{
+  "nama": "Joko Mine",
+  "email": "joko.mine@example.com",
+  "no_telp": "08123456789",
+  "password": "password123"
+}
+
+Response 201
+{
+  "message": "Registrasi berhasil (Mine Planner)",
+  "user": { "id": "...", "nama": "Joko Mine", "email": "joko.mine@example.com" },
+  "token": "eyJ..."
+}
+
+2️⃣ Register Shipping Planner
+Request
+
+Method: POST
+URL: http://localhost:9000/api/auth/register/shipping
+
+Body:
+
+{
+  "nama": "Sari Shipping",
+  "email": "sari.ship@example.com",
+  "no_telp": "08123456788",
+  "password": "password123"
+}
+
+3️⃣ Login (untuk kedua role)
+Request
+
+Method: POST
+URL: http://localhost:9000/api/auth/login
+
+Body:
+
+{
+  "email": "joko.mine@example.com",
+  "password": "password123",
+  "role": "mine_planner"
+}
+
+Response
+
+Berisi token + user info.
+Gunakan token tersebut di Postman:
+
+Authorization → Bearer Token
+
+4️⃣ Mine Planner Membuat Order
+Request
+
+Method: POST
+URL: http://localhost:9000/api/orders
+
+Header:
+
+Authorization: Bearer <token_mine>
+
+
+Body:
+
+{
+  "origin": "Tambang A",
+  "destination": "Pelabuhan B",
+  "cargo_type": "Nickel",
+  "cargo_weight_tons": 1500,
+  "transport_mode": "Vessel",
+  "distance_km": 120,
+  "planned_departure": "2025-11-20T08:00:00Z"
+}
+
+Response
+
+Mengembalikan objek order.
+
+5️⃣ Shipping Planner Membuat Schedule
+Request
+
+Method: POST
+URL: http://localhost:9000/api/schedules
+
+Header:
+
+Authorization: Bearer <token_shipping>
+
+
+Body:
+
+{
+  "orderId": "<order-id-dari-step-4>",
+  "vessel_name": "MV Armada 1",
+  "departure_time": "2025-11-21T10:00:00Z",
+  "arrival_time": "2025-11-22T04:00:00Z",
+  "road_condition_status": "Good",
+  "weather_condition": "Clear",
+  "cost_usd": 3500,
+  "notes": "Siapkan dokumen ekspor"
+}
+
+Response
+
+Mengembalikan schedule + status order berubah menjadi Scheduled.
+
+6️⃣ Update Status Schedule (Shipping Planner)
+Request
+
+Method: PUT
+URL: http://localhost:9000/api/schedules/:scheduleId
+
+Header:
+
+Authorization: Bearer <token_shipping>
+
+
+Body:
+
+{
+  "status": "Ongoing",
+  "notes": "Berangkat dari pelabuhan",
+  "road_condition_status": "Good",
+  "weather_condition": "Clear"
+}
+
+Response
+
+Schedule ter-update, dan bila status = Ongoing, maka order.status ⇒ In Transit.
+
+7️⃣ Get Orders Milik Mine Planner
+Request
+
+Method: GET
+URL: http://localhost:9000/api/orders/mine
+
+Header:
+
+Authorization: Bearer <token_mine>
+
+8️⃣ List Schedules (Shipping Planner)
+Request
+
+Method: GET
+URL: http://localhost:9000/api/schedules
+
+Header:
+
+Authorization: Bearer <token_shipping>
