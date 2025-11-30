@@ -1,3 +1,4 @@
+//role.middleware.js
 export const allowRole = (allowedRoles = []) => (req, res, next) => {
     const user = req.user;
     if (!user) return res.status(401).json({ message: "Unauthorized" });

@@ -1,3 +1,4 @@
+//schedule.routes.js
 import express from "express";
 import { authenticateToken } from "../middlewares/auth.middleware.js";
 import { allowRole } from "../middlewares/role.middleware.js";

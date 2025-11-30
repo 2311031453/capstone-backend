@@ -1,3 +1,4 @@
+//minePlanner.model.js
 export default (sequelize, DataTypes) => {
   const MinePlanner = sequelize.define("MinePlanner", {
     id: {

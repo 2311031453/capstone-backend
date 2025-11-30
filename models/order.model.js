@@ -1,3 +1,4 @@
+//order.model.js
 export default (sequelize, DataTypes) => {
   const Order = sequelize.define("Order", {
     id: { type: DataTypes.UUID, defaultValue: DataTypes.UUIDV4, primaryKey: true },

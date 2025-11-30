@@ -1,3 +1,4 @@
+//shippingPlanner.model.js
 export default (sequelize, DataTypes) => {
   const ShippingPlanner = sequelize.define("ShippingPlanner", {
     id: {

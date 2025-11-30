@@ -1,3 +1,4 @@
+//logistics_meta.model.js
 export default (sequelize, DataTypes) => {
     const LogisticsMeta = sequelize.define("LogisticsMeta", {
       id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },

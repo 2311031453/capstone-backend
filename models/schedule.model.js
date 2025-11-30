@@ -1,3 +1,4 @@
+//schedule.model.js
 export default (sequelize, DataTypes) => {
   const Schedule = sequelize.define("Schedule", {
     id: { type: DataTypes.UUID, defaultValue: DataTypes.UUIDV4, primaryKey: true },

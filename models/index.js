@@ -1,3 +1,4 @@
+// models/index.js
 import { Sequelize, DataTypes } from "sequelize";
 import dbConfig from "../config/db.config.js";
 
@@ -23,14 +24,16 @@ import makeShippingPlanner from "./shippingPlanner.model.js";
 import makeOrder from "./order.model.js";
 import makeSchedule from "./schedule.model.js";
 import makeLogisticsMeta from "./logistics_meta.model.js";
+import makeRefreshToken from "./refreshToken.model.js";
 
 db.MinePlanner = makeMinePlanner(sequelize, DataTypes);
 db.ShippingPlanner = makeShippingPlanner(sequelize, DataTypes);
 db.Order = makeOrder(sequelize, DataTypes);
 db.Schedule = makeSchedule(sequelize, DataTypes);
 db.LogisticsMeta = makeLogisticsMeta(sequelize, DataTypes);
+db.RefreshToken = makeRefreshToken(sequelize, DataTypes);
 
-// Associations
+// Associations (keep existing)
 db.MinePlanner.hasMany(db.Order, { foreignKey: "minePlannerId", as: "orders" });
 db.Order.belongsTo(db.MinePlanner, { foreignKey: "minePlannerId", as: "minePlanner" });
 
@@ -40,6 +43,8 @@ db.Schedule.belongsTo(db.ShippingPlanner, { foreignKey: "shippingPlannerId", as:
 db.Order.hasMany(db.Schedule, { foreignKey: "orderId", as: "schedules" });
 db.Schedule.belongsTo(db.Order, { foreignKey: "orderId", as: "order" });
 
-// FIX: jangan redeclare sequelize
+// Optional relation: not strict FK but helpful
+// RefreshToken references userId + userType; not setting Sequelize association to two possible tables.
+
 export { sequelize };
 export default db;

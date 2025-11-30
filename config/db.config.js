@@ -1,12 +1,12 @@
+//db.config.js
 import dotenv from "dotenv";
 dotenv.config();
-
 export default {
-  host: process.env.DB_HOST || "localhost",
-  port: process.env.DB_PORT || 5432,
-  database: process.env.DB_NAME || "mining_shipping_db",
-  username: process.env.DB_USER || "postgres",
-  password: process.env.DB_PASSWORD || "",
+  host: process.env.DB_HOST,
+  port: process.env.DB_PORT,
+  database: process.env.DB_NAME,
+  username: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
   dialect: "postgres",
   logging: false,
 };
