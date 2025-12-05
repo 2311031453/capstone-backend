@@ -1,11 +1,7 @@
 // middlewares/auth.middleware.js
-import jwt from "jsonwebtoken";
-import dotenv from "dotenv";
-dotenv.config();
+import { verifyAccessToken } from "../utils/token.util.js";
 
-const JWT_SECRET = process.env.JWT_SECRET;
-
-export const authenticateToken = async (req, res, next) => {
+export const authenticateToken = (req, res, next) => {
   try {
     const authHeader = req.headers["authorization"];
     if (!authHeader) return res.status(401).json({ message: "Token tidak ditemukan" });
@@ -13,24 +9,13 @@ export const authenticateToken = async (req, res, next) => {
     const token = authHeader.split(" ")[1];
     if (!token) return res.status(401).json({ message: "Token tidak ditemukan" });
 
-    const payload = jwt.verify(token, JWT_SECRET);
+    const payload = verifyAccessToken(token);
 
-    // FIXED: operator precedence bug
-    const normalizedRole =
-      payload.role ||
-      (payload.type === "mine"
-        ? "mine_planner"
-        : payload.type === "shipping"
-        ? "shipping_planner"
-        : null);
+    const normalizedRole = payload.role ||
+      (payload.type === "mine" ? "mine_planner" : payload.type === "shipping" ? "shipping_planner" : null);
 
-    const normalizedType =
-      payload.type ||
-      (payload.role === "mine_planner"
-        ? "mine"
-        : payload.role === "shipping_planner"
-        ? "shipping"
-        : null);
+    const normalizedType = payload.type ||
+      (payload.role === "mine_planner" ? "mine" : payload.role === "shipping_planner" ? "shipping" : null);
 
     if (!normalizedRole || !normalizedType) {
       return res.status(401).json({ message: "Token payload tidak valid (role/type null)" });
