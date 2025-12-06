@@ -16,3 +16,7 @@
 
 ### kalo bingung inbox aja ke E-Mail berikut : jokopramonoramadhani@gmail.com
 
+*untuk API sebenernya sudah saya testing, cuman biar kalian ada kerjaan saja.
+makanya saya  suruh testing*
+
+
