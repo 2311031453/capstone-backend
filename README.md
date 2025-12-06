@@ -1,11 +1,11 @@
 # KECIPAK-KECIPUK PANTAI ANYER
 
-## install postgresql 18 terlebih dahulu, lalu install postman.
-## kemudian clone saja repo ini.
-## jalankan npm install.
-## untuk db buat seperti di .env.
-## tidak usah buat table manual di sql editornya lho ya, karena sudah pakai sequalize.
-## cara jalanin liat dipackages.json
+### 1. install postgresql 18 terlebih dahulu, lalu install postman.
+### 2. kemudian clone saja repo ini (bebas kalo mau download .zip terus di ekstrak).
+### 3. jalankan npm install.
+### 4. untuk db buat seperti di .env.
+### 5. tidak usah buat table manual di sql editornya lho ya, karena sudah pakai sequalize.
+### 6. cara jalanin liat dipackages.json
 
 ### download postman : https://www.postman.com/downloads/
 ### download postgreSQL : https://www.postgresql.org/download/
